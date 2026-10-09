@@ -216,7 +216,7 @@ void LED_Pattern_4(void)
     LED2_Output(RGB_LED_OFF);
     int ledcount = 1;
     uint8_t switch_status = Get_PMOD_SWT_Status();
-    while (switch_status == 0x03)
+    while (switch_status == 0x04)
     {
         if (ledcount >= 0x80)
         {
@@ -227,7 +227,7 @@ void LED_Pattern_4(void)
         PMOD_8LD_Output(ledcount);
         Clock_Delay1ms(200);
         switch_status = Get_PMOD_SWT_Status();
-        if (switch_status != 0x03)
+        if (switch_status != 0x04)
         {
             break;
         }
@@ -240,7 +240,7 @@ void LED_Pattern_5(void)
     LED2_Output(RGB_LED_OFF);
     int ledcount = 0x80;
     uint8_t switch_status = Get_PMOD_SWT_Status();
-    while (switch_status == 0x04)
+    while (switch_status == 0x08)
     {
         if (ledcount <= 0)
         {
@@ -251,7 +251,7 @@ void LED_Pattern_5(void)
         PMOD_8LD_Output(ledcount);
         Clock_Delay1ms(200);
         switch_status = Get_PMOD_SWT_Status();
-        if (switch_status != 0x04)
+        if (switch_status != 0x08)
         {
             break;
         }
@@ -272,18 +272,18 @@ void Johnson_Counter(void)
             led_count = led_count << 1;
             led_count++;
             switch_status = Get_PMOD_SWT_Status();
-            if (switch_status != 0x05)
+            if (switch_status != 0x03)
             {
                 break;
             }
         }
-    for (int i = 0; i <= 7; i++)
+    for (int j = 0; j <= 7; j++)
             {
                 PMOD_8LD_Output(led_count);
                 Clock_Delay1ms(200);
                 led_count = led_count << 1;
                 switch_status = Get_PMOD_SWT_Status();
-                if (switch_status != 0x05)
+                if (switch_status != 0x03)
                 {
                     break;
                 }
@@ -326,7 +326,6 @@ void LED_Controller(uint8_t button_status, uint8_t switch_status)
             Johnson_Counter();
         }
         break;
-
         default:
         {
             LED_Pattern_1(button_status);
